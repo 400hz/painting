@@ -1,9 +1,28 @@
-## Welcome to GitHub Pages
+## Script
+```
+local Grid = game.Players.LocalPlayer.PlayerGui.MainGui.PaintFrame.GridHolder.Grid
+local orgTable =  = {}
 
-You can use the [editor on GitHub](https://github.com/400hz/painting/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+function cell(index,r,g,b)
+    local TargetCell = Grid[tostring(index)]
+    for i,v in pairs(getconnections(TargetCell.MouseButton1Click)) do 
+        setupvalue(v.Function,9,Color3.fromRGB(r,g,b))
+    end 
+    for i,v in pairs(getconnections(TargetCell.MouseButton1Down)) do 
+        v:Fire()
+    end 
+    spawn(function()
+        wait(.1)
+        for i,v in pairs(getconnections(TargetCell.MouseButton1Up)) do 
+            v:Fire()
+        end 
+    end)
+end 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
+for i,v in pairs(orgTable) do 
+    cell(i,v["R"],v["G"],v["B"])
+end
+```
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
